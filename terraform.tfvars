@@ -1,1 +1,1 @@
-destroy_infra = false
+destroy_infra = true
