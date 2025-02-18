@@ -22,6 +22,8 @@ resource "aws_docdb_cluster" "mongodb_cluster" {
   master_password        = "fiapeats-mspedido-db-pass"
   backup_retention_period = 1
   skip_final_snapshot    = true
+
+  vpc_security_group_ids = [aws_security_group.mongodb_sg.id]  # 🚀 Associação explícita
 }
 
 resource "aws_docdb_cluster_instance" "mongodb_instance" {
@@ -47,4 +49,6 @@ resource "aws_security_group" "mongodb_sg" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  depends_on = [aws_docdb_cluster.mongodb_cluster]  # 🚀 Garante que o Cluster é removido primeiro
 }
